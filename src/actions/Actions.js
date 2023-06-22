@@ -24,15 +24,49 @@ export const fetchUser = (curUserEmail, setCurUser) =>  {
         }))
       }
     });
-  }
+}
 
 
 export const fetchBuildings = (setBuildings) => {
   axios.get('http://localhost:3001/buildings')
     .then(req => setBuildings(r => req.data)) 
 }
+export const fetchBuilding = (id, setBuilding) => {
+  axios.get(`http://localhost:3001/buildings/${id}`)
+    .then(req => setBuilding(r => req.data[0])) 
+}
 
 export const fetchUsers = (setUsers) => {
   axios.get('http://localhost:3001/users')
     .then(req => setUsers(r => req.data)) 
+}
+
+export const fetchUnits = (building_id, setUnits) => {
+  axios.get(`http://localhost:3001/buildings/${building_id}/units`)
+    .then(req => setUnits(r => req.data)) 
+}
+
+export const removeUnit = (unit_id, building_id) => {
+  axios.delete(`http://localhost:3001/buildings/${building_id}/units/${unit_id}`)
+  
+}
+
+export const removeBuilding = (building_id) => {
+  axios.delete(`http://localhost:3001/buildings/${building_id}`)
+  
+}
+
+
+export const fetchLeases = (building_id, unit_id, setLeases) => {
+  axios.get(`http://localhost:3001/buildings/${building_id}/units/${unit_id}/leases`)
+    .then(req => setLeases(r => req.data)) 
+}
+
+export const removeLease = (unit_id, building_id, lease_id) => {
+  axios.delete(`http://localhost:3001/buildings/${building_id}/units/${unit_id}/leases/${lease_id}`)
+}
+
+export const fetchLease = (id, setLease) => {
+  axios.get(`http://localhost:3001/buildings/lease/${id}`)
+    .then(req => setLease(r => req.data[0])) 
 }

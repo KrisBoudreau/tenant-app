@@ -3,13 +3,23 @@ import { Routes, Route } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginPage from "./components/login/LoginPage";
 import ResponsiveAppBar from "./components/navbar/AppBar";
-import Home from "./components/home/Home";
-import Buildings from "./components/buildings/Buildings";
-import Users from "./components/users/Users";
+import Home from "./pages/home/Home";
+import Buildings from "./pages/buildings/buildings/Buildings";
+import Users from "./pages/users/Users";
 import { fetchUser } from "./actions/Actions";
+import BuildingPage from "./pages/buildings/BuildingPage/BuildingPage";
+import './App.css';
+import LeasePage from './pages/buildings/BuildingPage/LeasePage/LeasePage'
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ColorModeContext, useMode } from "./theme";
+import TopBar from "./components/navbar/TopBar";
+import SideBar from "./components/navbar/SideBar";
 
 
 function App() {
+
+  const [theme, colorMode] = useMode();
+  const [isSidebar, setIsSidebar] = useState(true);
 
   const { isAuthenticated, isLoading, user } = useAuth0();
   const [curUser, setCurUser] = useState();
@@ -27,16 +37,28 @@ function App() {
   if (isLoading) return <div>Loading ...</div>
   if (!isAuthenticated) return <LoginPage />
   return (
-    <>
-    <ResponsiveAppBar />
-    <div >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/buildings" element={<Buildings />} />
-          <Route path="/users" element={<Users />} />
-        </Routes>
-    </div>
-    </>
+
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}> 
+        <CssBaseline /> 
+
+        
+        <div className="app">
+            <SideBar /> 
+            {/* <ResponsiveAppBar /> */}
+            <main className="content">
+              <TopBar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/buildings" element={<Buildings curUser={curUser} />} />
+                <Route path="/buildings/:id" element={<BuildingPage curUser={curUser} />} />
+                <Route path="/leases/:id" element={<LeasePage />} />
+                <Route path="/users" element={<Users />} />
+              </Routes>
+            </main>
+        </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 
