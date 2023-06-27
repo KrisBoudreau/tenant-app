@@ -14,10 +14,14 @@ import { tokens } from "../../../theme";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "./Header";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+import moment from 'moment';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function BuildingPage( {curUser} ) {
 
     let { id } = useParams();
+    const buildingId = id;
+    moment().format();
 
     const [displayUnitForm, setDisplayUnitForm] = useState(false);
     const [refreshUnits, setRefreshUnits] = useState(false);
@@ -28,12 +32,11 @@ export default function BuildingPage( {curUser} ) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-
+    //fetch units
     useEffect(() => {
         fetchUnits(id, setUnits);
         fetchBuilding(id, setBuilding);
         setRefreshUnits(r => false);
-
     }, [refreshUnits])
 
 
@@ -45,125 +48,126 @@ export default function BuildingPage( {curUser} ) {
           headerName: "Unit Number",
           flex: 1,
           editable: true,
-          cellClassName: "name-column--cell",
+          type: 'number',
         },
-        { field: "role",
-          headerName: "Role",
+        { field: "tenant_name",
+          headerName: "Tenant Name",
           flex: 1,
           editable: true,
-          type: 'singleSelect',
-          valueOptions: ['admin', 'full access', 'view only', 'blocked'],
-          renderCell: ({ row: { role } }) => {
-            return (
-              <Box
-                width="60%"
-                m="0 auto"
-                p="5px"
-                display="flex"
-                justifyContent="center"
-                backgroundColor={
-                  role === "admin"
-                    ? colors.greenAccent[600]
-                    : role === "manager"
-                    ? colors.greenAccent[700]
-                    : colors.greenAccent[700]
-                }
-                borderRadius="4px"
-              >
-                {role === "admin" && <AdminPanelSettingsOutlinedIcon />}
-                {role === "full access" && <SecurityOutlinedIcon />}
-                {role === "view only" && <LockOpenOutlinedIcon />}
-                {role === "blocked" && <BlockIcon />}
-                <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-                  {role}
-                </Typography>
-              </Box>
-            );
-          },
-          
+        },
+        { field: "type",
+          headerName: "Type",
+          flex: 1,
+          editable: true,
+        },
+        { field: "size",
+          headerName: "Size",
+          type: "number",
+          flex: 1,
+          editable: true,
+        },
+        { field: "price_per_sqft",
+          headerName: "Price/Sqft",
+          type: "number",
+          flex: 1,
+          editable: true,
+        },
+        { field: "vacant",
+          headerName: "Vacant",
+          flex: 1,
+          type: 'boolean',
+          editable: true,
+        },
+        { field: "base_rate",
+          headerName: "Base Rate",
+          flex: 1,
+          type: 'number',
+          editable: true,
+        },
+        { field: "end_of_insurance",
+          headerName: "End of Insurance",
+          type: 'date',
+          width: 180,
+          editable: true,
+          valueFormatter: params => 
+          moment(params?.value).format("DD/MM/YYYY"),
+        },
+        { field: "end_of_lease",
+          headerName: "End of Lease",
+          type: 'date',
+          width: 180,
+          editable: true,
+          valueFormatter: params => 
+          moment(params?.value).format("DD/MM/YYYY"),
         },
         { field: 'actions',
           headerName: 'Actions',
           type: 'actions',
           renderCell: (params) => (
-            // {...{ params, rowId, setRowId }}
-            <UnitActions  {...{ params, rowId, setRowId }}/>
+            <UnitActions  {...{ params, rowId, setRowId, buildingId, setRefreshUnits }}/>   
           ),
         },
-      ];
-    
+    ];  
 
     return (
-        <div>
-            <Typography variant="h5" sx={{margin: 2}}>{building.name}</Typography>
+      
+      <Box m="20px">
+        
+        <Header title={building.name} />
+        
+        <Button 
+          sx={{backgroundColor:colors.primary[300], mX:2}} 
+          onClick={() => setDisplayUnitForm(r => !r)}>
+          <Typography>Add Unit</Typography>
+        </Button>
 
-            <Button onClick={() => setDisplayUnitForm(r => !r)}>Add Unit</Button>
-
-            {displayUnitForm ? <UnitForm 
-                curUser={curUser} 
-                building_id={id}
-                setRefreshUnits={setRefreshUnits}
-                setDisplayUnitForm={setDisplayUnitForm} /> : 
-                ''}
-
-            { units.map(unit => {
-                return (
-                    <Unit 
-                        curUser={curUser}
-                        unit_id={unit._id}
-                        unit_number={unit.unit_number}
-                        setRefreshUnits={setRefreshUnits}
-                        building_id={id} 
-                    />      
-                )
-            })
-
-
-            }
-
-            <Box m="20px">
-                <Header title="Users" subtitle="Managing the Team Members" />
-                <Box
-                    m="40px 0 0 0"
-                    height="75vh"
-                    sx={{
-                    "& .MuiDataGrid-root": {
-                        border: "none",
-                    },
-                    "& .MuiDataGrid-cell": {
-                        borderBottom: "none",
-                    },
-                    "& .name-column--cell": {
-                        color: colors.greenAccent[300],
-                    },
-                    "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: colors.blueAccent[700],
-                        borderBottom: "none",
-                    },
-                    "& .MuiDataGrid-virtualScroller": {
-                        backgroundColor: colors.primary[400],
-                    },
-                    "& .MuiDataGrid-footerContainer": {
-                        borderTop: "none",
-                        backgroundColor: colors.blueAccent[700],
-                    },
-                    "& .MuiCheckbox-root": {
-                        color: `${colors.greenAccent[200]} !important`,
-                    },
-                    }}
-                >
-                    {/* mockDataTeam */}
-                    {units == 'none' ? 
-                    <HourglassTopIcon/>: 
-                    <DataGrid 
-                        rows={ units } 
-                        columns={columns} 
-                        getRowId={(row) => row._id}
-                        onCellEditStart={(params) => setRowId(params.id)}
-                    />} 
-                </Box>
-            </Box>
+        {displayUnitForm ? <UnitForm 
+          curUser={curUser} 
+          building_id={id}
+          setRefreshUnits={setRefreshUnits}
+          setDisplayUnitForm={setDisplayUnitForm} /> : 
+          ''}
+        <Box
+          m="40px 0 0 0"
+          height="71vh"
+          sx={{
+          "& .MuiDataGrid-root": {
+              border: "none",
+          },
+          "& .MuiDataGrid-cell": {
+              borderBottom: "none",
+          },
+          "& .name-column--cell": {
+              color: colors.greenAccent[300],
+          },
+          "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: colors.blueAccent[700],
+              borderBottom: "none",
+          },
+          "& .MuiDataGrid-virtualScroller": {
+              backgroundColor: colors.primary[400],
+          },
+          "& .MuiDataGrid-footerContainer": {
+              borderTop: "none",
+              backgroundColor: colors.blueAccent[700],
+          },
+          "& .MuiCheckbox-root": {
+              color: `${colors.greenAccent[200]} !important`,
+          },
+          }}
+        >
+          {units == 'none' ? 
+          <HourglassTopIcon/>: 
+          <DataGrid 
+              rows={ units } 
+              columns={columns} 
+              getRowId={(row) => row._id}
+              onCellEditStart={(params) => setRowId(params.id)
+              }
+          />} 
+        </Box>
+      </Box>
     
-        </div>
+            
     )
 }

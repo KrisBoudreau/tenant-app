@@ -15,7 +15,7 @@ export default function BuildingCard( {curUser, name, id, setRefreshBuildings } 
   return (
 
 
-    <Box display="flex" justifyContent="space-between">
+    <Box display="flex" justifyContent="space-evenly">
         <Link to={`/buildings/${id}`} style={{ textDecoration: 'none'}}>
         <Card sx={{
             marginY: 2.5, 

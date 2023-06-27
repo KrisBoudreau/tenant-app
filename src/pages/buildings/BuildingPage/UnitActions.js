@@ -1,26 +1,30 @@
 import { Box, CircularProgress, Fab } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Check, Save } from '@mui/icons-material';
-import { green } from '@mui/material/colors';
-// import { updateUser } from '../../actions/Actions';
+import { green, grey } from '@mui/material/colors';
+import { updateUnit } from '../../../actions/Actions';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useTheme } from '@mui/material';
+import { tokens } from "../../../theme";
+import axios from 'axios'
 
-const UnitActions = ({ params, rowId, setRowId }) => {
+const UnitActions = ({ params, rowId, setRowId, buildingId, setRefreshUnits }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async () => {  
     setLoading(true);
-
-    const { name, email, role, _id } = params.row;
-
-    // const result = await updateUser( {name, email, role, _id} );
+    
+    await updateUnit( params.row );
     const result = true;
   
-    if (true) {
+    setTimeout(() => {
       setSuccess(true);
       setRowId(null);
-    }
-    setLoading(false);
+      setLoading(false);
+    },1000)
   };
 
   useEffect(() => {
@@ -34,6 +38,7 @@ const UnitActions = ({ params, rowId, setRowId }) => {
         position: 'relative',
       }}
     >
+      
       {success ? (
         <Fab
           color="primary"
@@ -71,6 +76,18 @@ const UnitActions = ({ params, rowId, setRowId }) => {
           }}
         />
       )}
+
+      <DeleteIcon 
+        sx={{
+          position: 'absolute', 
+          top: '50%', 
+          transform: 'translateY(-50%)',
+          '&:hover': { color: 'red' }}}
+        onClick={() => {
+          axios.delete(`http://localhost:3001/buildings/${buildingId}/units/${params.row._id}`);
+          setRefreshUnits(r => true)   
+        }} 
+      />
     </Box>
   );
 };

@@ -7,6 +7,21 @@ export const updateUser = async ( {name, email, role, _id} ) => {
   axios.post(`http://localhost:3001/users/update/${_id}`, {
     name: name, email: email, role: role});
 }
+export const updateUnit = async ( p ) => {
+  axios.post(`http://localhost:3001/buildings/${p.building_id}/units/${p._id}`,{
+    unit_number: p.unit_number, 
+    tenant_name: p.tenant_name,
+    price_per_sqft: p.price_per_sqft,
+    size: p.size,
+    type: p.type,
+    end_of_insurance: p.end_of_insurance,
+    end_of_lease: p.end_of_lease,
+    base_rate: p.base_rate,
+    vacant: p.vacant,
+
+  })
+  console.log(p)
+}
 
 
 
