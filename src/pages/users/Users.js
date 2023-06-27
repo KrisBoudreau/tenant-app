@@ -8,64 +8,51 @@ import { tokens } from "../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import BlockIcon from '@mui/icons-material/Block';
 import Header from "./Header";
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+
+import UsersActions from './UserActions';
 
 export default function Users() {
 
   const [users, setUsers] = useState('none');
   const [refreshUsers, setRefreshUsers] = useState(false);
-
+  const [rowId, setRowId] = useState(null);
+ 
 
   //get users
-  // useEffect(() => { 
-  //   fetchUsers(setUsers);
-  //   setRefreshUsers(r => false);
-  // }, [refreshUsers])
-  // if (users === 'none'){
-  //   return <h1>loading</h1>
-  // }
-
-
-  // return (
-  //   <div>users</div>
-  // )
-
-
+  useEffect(() => { 
+    fetchUsers(setUsers);
+    setRefreshUsers(r => false);
+  }, [refreshUsers])
 
 
 
   const theme = useTheme();
+  
   const colors = tokens(theme.palette.mode);
+
   const columns = [
-    { field: "id", headerName: "ID" },
-    {
-      field: "name",
+
+    { field: "name",
       headerName: "Name",
       flex: 1,
+      editable: true,
       cellClassName: "name-column--cell",
     },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
+    { field: "email",
+      editable: true,
       headerName: "Email",
       flex: 1,
     },
-    {
-      field: "accessLevel",
-      headerName: "Access Level",
+    { field: "role",
+      headerName: "Role",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
+      editable: true,
+      type: 'singleSelect',
+      valueOptions: ['admin', 'full access', 'view only', 'blocked'],
+      renderCell: ({ row: { role } }) => {
         return (
           <Box
             width="60%"
@@ -74,27 +61,37 @@ export default function Users() {
             display="flex"
             justifyContent="center"
             backgroundColor={
-              access === "admin"
+              role === "admin"
                 ? colors.greenAccent[600]
-                : access === "manager"
+                : role === "manager"
                 ? colors.greenAccent[700]
                 : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
+            {role === "admin" && <AdminPanelSettingsOutlinedIcon />}
+            {role === "full access" && <SecurityOutlinedIcon />}
+            {role === "view only" && <LockOpenOutlinedIcon />}
+            {role === "blocked" && <BlockIcon />}
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
+              {role}
             </Typography>
           </Box>
         );
       },
+      
+    },
+    { field: 'actions',
+      headerName: 'Actions',
+      type: 'actions',
+      renderCell: (params) => (
+        <UsersActions {...{ params, rowId, setRowId }} />
+      ),
     },
   ];
 
   return (
+    
     <Box m="20px">
       <Header title="Users" subtitle="Managing the Team Members" />
       <Box
@@ -126,7 +123,14 @@ export default function Users() {
           },
         }}
       >
-        <DataGrid rows={mockDataTeam} columns={columns} />
+        {/* mockDataTeam */}
+        {users == 'none' ? 
+          <HourglassTopIcon/>: 
+          <DataGrid 
+            rows={ users } 
+            columns={columns} 
+            getRowId={(row) => row._id}
+            onCellEditStart={(params) => setRowId(params.id)}/>} 
       </Box>
     </Box>
   );

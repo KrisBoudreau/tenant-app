@@ -2,8 +2,16 @@
 import axios from 'axios';
 
 
+
+export const updateUser = async ( {name, email, role, _id} ) => {
+  axios.post(`http://localhost:3001/users/update/${_id}`, {
+    name: name, email: email, role: role});
+}
+
+
+
 export const fetchUser = (curUserEmail, setCurUser) =>  {
-    axios.get(`http://localhost:3001/users/${curUserEmail}`)
+    axios.get(`http://localhost:3001/users/email/${curUserEmail}`)
     .then(res => {
       if (res.data.length == 0){
         axios({
@@ -15,6 +23,11 @@ export const fetchUser = (curUserEmail, setCurUser) =>  {
             role: 'blocked'
           }
         });
+        setCurUser(u => ({
+          name: 'no name',
+          role: 'blocked',
+          email: curUserEmail
+        }))
       }
       else {
         setCurUser(u => ({

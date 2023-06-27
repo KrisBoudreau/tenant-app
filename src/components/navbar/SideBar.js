@@ -17,6 +17,7 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -36,11 +37,13 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const SideBar = () => {
+const SideBar = ( {curUser} ) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  
+  
 
   return (
     <Box
@@ -102,10 +105,11 @@ const SideBar = () => {
                     fontWeight="bold"
                     sx={{ m: "10px 0 0 0" }}
                     >
-                    Ed Roh
+                      
+                    {curUser == 'none' ? <HourglassTopIcon />: curUser.name}
                     </Typography>
                     <Typography variant="h5" color={colors.greenAccent[500]}>
-                    VP Fancy Admin
+                    {curUser == 'none' ? <HourglassTopIcon />: curUser.role}
                     </Typography>
                 </Box>
                 </Box>

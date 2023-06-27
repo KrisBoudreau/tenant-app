@@ -1,6 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
+import { Box } from '@mui/material';
+import { useTheme } from '@emotion/react'
+import { tokens } from '../../../theme'
 
 export default function BuildingForm( {
     curUser, 
@@ -8,8 +11,14 @@ export default function BuildingForm( {
     setDisplayBuildingForm} ) {
 
     const {register, handleSubmit } = useForm();
+
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     return (
-        <div>
+        <Box sx={{
+            backgroundColor: colors.primary[400]
+        }}>
             Building Form
             <form onSubmit={handleSubmit(
                 (data)=> {
@@ -32,8 +41,8 @@ export default function BuildingForm( {
                 <input type="submit" value="submit"/>
             </form>
 
-
-        </div>
+                
+        </Box>
     )
 }
 

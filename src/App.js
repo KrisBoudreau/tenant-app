@@ -14,6 +14,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import TopBar from "./components/navbar/TopBar";
 import SideBar from "./components/navbar/SideBar";
+import Users2 from "./pages/users/Users2";
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
 
   const { isAuthenticated, isLoading, user } = useAuth0();
-  const [curUser, setCurUser] = useState();
+  const [curUser, setCurUser] = useState('none');
 
 
   //get current User info
@@ -36,6 +37,7 @@ function App() {
 
   if (isLoading) return <div>Loading ...</div>
   if (!isAuthenticated) return <LoginPage />
+  
   return (
 
     <ColorModeContext.Provider value={colorMode}>
@@ -44,7 +46,7 @@ function App() {
 
         
         <div className="app">
-            <SideBar /> 
+            <SideBar curUser={curUser}/> 
             {/* <ResponsiveAppBar /> */}
             <main className="content">
               <TopBar />
@@ -54,6 +56,7 @@ function App() {
                 <Route path="/buildings/:id" element={<BuildingPage curUser={curUser} />} />
                 <Route path="/leases/:id" element={<LeasePage />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/users2" element={<Users2 />} />
               </Routes>
             </main>
         </div>

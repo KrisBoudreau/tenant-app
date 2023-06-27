@@ -4,7 +4,10 @@ import axios from 'axios'
 import { fetchBuildings } from  '../../../actions/Actions'
 import BuildingCard from './BuildingCard'
 import BuildingForm from './BuildingForm'
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
+import { useTheme } from '@emotion/react'
+import { tokens } from '../../../theme'
+import { color } from '@mui/system'
 
 
 
@@ -12,7 +15,10 @@ export default function Buildings( {curUser} ) {
 
   const [refreshBuildings, setRefreshBuildings] = useState(false);
   const [buildings, setBuildings] = useState('none');
-  const [displayBuildingForm, setDisplayBuildingForm] = useState('none');
+  const [displayBuildingForm, setDisplayBuildingForm] = useState(false);
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   //get buildings
   useEffect(() => { 
@@ -29,10 +35,25 @@ export default function Buildings( {curUser} ) {
     <div>
       
 
-      <Button onClick={() => {
-        setDisplayBuildingForm(r => !r);
+      <Button 
+        sx={{
+          backgroundColor: colors.primary[400],
+          '&:hover': {
+            backgroundColor: colors.primary[300],
+            
+          },
+          margin: 3
+        
+        }}
+        onClick={() => {
+          setDisplayBuildingForm(r => !r);
 
-      }}>Add building</Button>
+      }}>
+        <Typography color={colors.grey[100]}  >
+          Add building
+        </Typography>
+      
+      </Button>
 
       {displayBuildingForm ? <BuildingForm 
         curUser={curUser}
