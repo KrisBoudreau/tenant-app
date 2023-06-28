@@ -18,6 +18,7 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+import { maxHeight } from "@mui/system";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -62,7 +63,7 @@ const SideBar = ( {curUser} ) => {
         },
         "& .pro-menu-item.active": {
           color: "#6870fa !important",
-        },
+        }
       }}
     >
       <ProSidebar collapsed={isCollapsed}>

@@ -20,7 +20,18 @@ export const updateUnit = async ( p ) => {
     vacant: p.vacant,
 
   })
-  console.log(p)
+}
+
+export const updateLease = async ( p ) => {
+  axios.post(
+    `http://localhost:3001/buildings/${p.building_id}/units/${p.unit_id}/leases/${p._id}`,{
+    tenant_name: p.tenant_name,
+    tenant_phone: p.tenant_phone,
+    tenant_email: p.tenant_email,
+    start_date: p.start_date,
+    end_date: p.end_date
+
+  })
 }
 
 
