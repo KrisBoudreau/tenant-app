@@ -9,6 +9,9 @@ import moment from 'moment';
 import InfoIcon from '@mui/icons-material/Info';
 import { DataGrid } from "@mui/x-data-grid";
 import LeaseActions from './LeaseActions';
+import Header from './Header';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 
 export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser} ) {
@@ -94,26 +97,14 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser}
     
 
   return (
-        
+    
+
     <Box sx={{
       backgroundColor: colors.primary[400],
       justifyContent: 'space-evenly',
-      m: 3
+      m: 3,
+      border: 2
     }}>
-
-      <Button 
-          sx={{backgroundColor: 'red', justifyContent: 'flex',
-          alignContent: 'center',}}
-          onClick={() => onClose()}>
-          Close
-      </Button>
-
-      <Button 
-          sx={{backgroundColor: 'GrayText', justifyContent: 'flex',
-          alignContent: 'center',}}
-          onClick={() => setDisplayLeaseForm(r => !r)}>
-          Create lease
-      </Button>
 
       {displayLeaseForm? <LeaseForm {...{building_id, unit_id, curUser, setRefreshLeases, setDisplayLeaseForm}}/>: ''}
 
@@ -121,7 +112,7 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser}
       {leases == 'none' ? 
         <HourglassTopIcon/>: 
         //DATA GRID
-        <Box 
+        <Box
         sx={{
           m: 3,
           "& .MuiDataGrid-root": {
@@ -147,8 +138,23 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser}
           "& .MuiCheckbox-root": {
               color: `${colors.greenAccent[200]} !important`,
           },
-          }}
-          >
+        }}>
+
+          <Box justifyContent='space-between' display='flex' mY={2} >
+            <Typography variant="h2" color={colors.grey[100]} fontWeight="bold"> 
+            Leases </Typography>
+
+            <IconButton onClick={() =>  onClose()}>
+              <CloseIcon sx={{color: 'red'}}/>
+            </IconButton>
+          </Box>
+
+          <Button 
+            sx={{backgroundColor: 'GrayText', justifyContent: 'flex',
+            alignContent: 'center',}}
+            onClick={() => setDisplayLeaseForm(r => !r)}>
+            Create lease
+          </Button>
           <DataGrid 
             rows={ leases } 
             columns={columns} 
@@ -156,6 +162,8 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser}
             onCellEditStart={(params) => setRowId(params.id)}
             pageSizeOptions={[]}
           />
+          
+
         </Box>}
 
     </Box>

@@ -15,6 +15,7 @@ import { ColorModeContext, useMode } from "./theme";
 import TopBar from "./components/navbar/TopBar";
 import SideBar from "./components/navbar/SideBar";
 import Users2 from "./pages/users/Users2";
+import ContactForm from "./pages/contact/ContactForm";
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
                 <Route path="/leases/:id" element={<LeasePage />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/users2" element={<Users2 />} />
+                <Route path="/email" element={<ContactForm />} />
               </Routes>
             </main>
         </div>
