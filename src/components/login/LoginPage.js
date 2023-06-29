@@ -1,10 +1,16 @@
 import React from 'react'
-import LoginButton from './Login-button'
-import { useContext } from "react";
-import { Box, useTheme } from "@mui/material";
-import { ColorModeContext, tokens } from "../../theme";
+
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button} from "@mui/material";
+//import { tokens } from "../../theme";
+
 
 export default function LoginPage() {
+
+  //const theme = useTheme();
+  //const colors = tokens(theme.palette.mode);
+
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <div style={{
@@ -18,7 +24,13 @@ export default function LoginPage() {
 
     }}>
 
-      <LoginButton />
+    
+      <Button size="large" sx={{display: 'flex'}} onClick={() => loginWithRedirect()}>
+        Log In
+      </Button>
+
+
+
 
 
     </div>

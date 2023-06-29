@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { fetchBuildings } from  '../../../actions/Actions'
+import { fetchBuildings } from  '../../actions/Actions'
 import BuildingCard from './BuildingCard'
 import BuildingForm from './BuildingForm'
 import { Button, Typography, Box } from '@mui/material'
 import { useTheme } from '@emotion/react'
-import { tokens } from '../../../theme'
+import { tokens } from '../../theme'
 import { color } from '@mui/system'
 
 

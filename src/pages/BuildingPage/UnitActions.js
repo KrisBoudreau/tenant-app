@@ -2,13 +2,13 @@ import { Box, CircularProgress, Fab } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Check, Save } from '@mui/icons-material';
 import { green, grey } from '@mui/material/colors';
-import { updateLease } from '../../../actions/Actions';
+import { updateUnit } from '../../actions/Actions';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTheme } from '@mui/material';
-import { tokens } from "../../../theme";
+import { tokens } from "../../theme";
 import axios from 'axios'
 
-const LeaseActions = ({ params, rowId, setRowId, building_id, unit_id, setRefreshLeases }) => {
+const UnitActions = ({ params, rowId, setRowId, buildingId, setRefreshUnits }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const theme = useTheme();
@@ -17,8 +17,9 @@ const LeaseActions = ({ params, rowId, setRowId, building_id, unit_id, setRefres
   const handleSubmit = async () => {  
     setLoading(true);
 
+    console.log(params.row);
     
-    const result = await updateLease( params.row );
+    const result = await updateUnit( params.row );
     
   
     setTimeout(() => {
@@ -85,12 +86,12 @@ const LeaseActions = ({ params, rowId, setRowId, building_id, unit_id, setRefres
           transform: 'translateY(-50%)',
           '&:hover': { color: 'red' }}}
         onClick={() => {
-          axios.delete(`http://localhost:3001/buildings/${building_id}/units/${unit_id}/leases/${params.id}`);
-          setRefreshLeases(r => true)   
+          axios.delete(`http://localhost:3001/buildings/${buildingId}/units/${params.row._id}`);
+          setRefreshUnits(r => true)   
         }} 
       />
     </Box>
   );
 };
 
-export default LeaseActions;
+export default UnitActions;

@@ -2,15 +2,10 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import UnitForm from './UnitForm'
-import { Button, Card, Typography, Box, useTheme } from '@mui/material';
-import { fetchUnits, fetchBuilding } from '../../../actions/Actions'
-import Unit from './Unit'
+import { Button, Typography, Box, useTheme } from '@mui/material';
+import { fetchUnits, fetchBuilding } from '../../actions/Actions'
 import UnitActions from './UnitActions';
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import BlockIcon from '@mui/icons-material/Block';
-import { tokens } from "../../../theme";
+import { tokens } from "../../theme";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "./Header";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
@@ -18,7 +13,6 @@ import moment from 'moment';
 import ArticleIcon from '@mui/icons-material/Article';
 import LeasePopUpPage from './LeasePopUpPage';
 import AddIcon from '@mui/icons-material/Add';
-import IconButton from '@mui/material/IconButton';
 
 export default function BuildingPage( {curUser} ) {
 
@@ -43,7 +37,7 @@ export default function BuildingPage( {curUser} ) {
       fetchUnits(id, setUnits);
       fetchBuilding(id, setBuilding);
       setRefreshUnits(r => false);
-  }, [refreshUnits])
+  }, [refreshUnits, id])
 
 
   
@@ -192,7 +186,7 @@ export default function BuildingPage( {curUser} ) {
           },
           }}
         >
-          {units == 'none' ? 
+          {units === 'none'? 
           <HourglassTopIcon/>: 
           <DataGrid 
               rows={ units } 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Typography, Box, useTheme } from '@mui/material'
-import { tokens } from '../../../theme'
-import { fetchLeases } from '../../../actions/Actions';
+import { tokens } from '../../theme'
+import { fetchLeases } from '../../actions/Actions';
 import { useEffect, useState } from 'react';
 import LeaseForm from './LeaseForm';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
@@ -9,7 +9,6 @@ import moment from 'moment';
 import InfoIcon from '@mui/icons-material/Info';
 import { DataGrid } from "@mui/x-data-grid";
 import LeaseActions from './LeaseActions';
-import Header from './Header';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
@@ -93,7 +92,7 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser}
         fetchLeases(building_id, unit_id, setLeases);
         setRefreshLeases(r => false);
     
-    }, [refreshLeases, displayLeaseForm])
+    }, [refreshLeases, displayLeaseForm, building_id, unit_id])
     
 
   return (
@@ -109,7 +108,7 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser}
       {displayLeaseForm? <LeaseForm {...{building_id, unit_id, curUser, setRefreshLeases, setDisplayLeaseForm}}/>: ''}
 
 
-      {leases == 'none' ? 
+      {leases === 'none' ? 
         <HourglassTopIcon/>: 
         //DATA GRID
         <Box
