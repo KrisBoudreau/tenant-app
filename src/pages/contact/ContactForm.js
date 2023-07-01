@@ -1,26 +1,44 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Button } from '@mui/material'
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
-export default function ContactForm() {
-  const [recipient_email, setEmail] = useState('kristopher.boudreau@mail.mcgill.ca');
-  const [subject, setSubject] = useState('subject here');
-  const [message, setMessages] = useState('hello world');
+const ContactForm = () => {
+  const form = useRef();
+  console.log(emailjs);
 
-  const sendMail = () => {
+  const sendEmail = (e) => {
+    e.preventDefault();
 
-    console.log("Sending Email");
+    emailjs.sendForm('contact_service', 'contact_form', form.current, 'z_XQkle-XnwZbpwEP')
+      .then((result) => {
+          console.log(form.current);
+      }, (error) => {
+          console.log(error.text);
+      });
+    
+  };
 
-      axios
-        .post("http://localhost:3001/send_email")
-        .then(() => alert("Message Send Succesfuly"))
-        .catch(() => alert("Oppssy daisssy"));
+  const sendE = () => {
+    emailjs.send('contact_service', 'contact_form', {user_email: 'kris.boudreau68@gmail.com', message: 'sup'}, 'z_XQkle-XnwZbpwEP')
+    .then((result) => {
+      console.log('success');
+    }, (error) => {
+        console.log('fail');
+    });
 
-    }
-  
+  }
+  sendE();
 
   return (
-    <Button sx={{backgroundColor: "red"}} onClick={sendMail}>jdmd</Button>
-  )
-  
-}
+    <form ref={form} onSubmit={sendEmail}>
+      <label>Name</label>
+      <input type="text" name="user_name" />
+      <label>Email</label>
+      <input type="email" name="user_email" />
+      <label>Message</label>
+      <textarea name="message" />
+      <input type="submit" value="Send" />
+    </form>
+  );
+};
+
+export default ContactForm;

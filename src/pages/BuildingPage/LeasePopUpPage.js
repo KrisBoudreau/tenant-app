@@ -11,9 +11,12 @@ import { DataGrid } from "@mui/x-data-grid";
 import LeaseActions from './LeaseActions';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add'
+import axios from 'axios'
+import LeasePage from './LeasePage'
 
 
-export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser} ) {
+export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser, setDisplayLease, setCurLease} ) {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -23,6 +26,7 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser}
   const [displayLeaseForm, setDisplayLeaseForm] = useState(false);
   const [refreshLeases, setRefreshLeases] = useState(false);
   const [leases, setLeases] = useState('none');
+  
 
   const columns = [
     { field: "resident",
@@ -69,9 +73,11 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser}
       renderCell: (params) => (
         <InfoIcon 
         sx={{'&:hover': { color: "#6870fa" }}}
-        onClick={() => {
-        }}/>
-          
+        onClick={() => { 
+          axios.get(`http://localhost:3001/buildings/${building_id}/units/${unit_id}/leases/${params.id}`)
+          .then(l => setCurLease(l.data[0]))
+          .then(setDisplayLease(true))  
+        }}/>  
       ),
     },
     { field: 'actions',
@@ -87,85 +93,71 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser}
   ]; 
 
 
-     //get leases
-    useEffect(() => { 
-        fetchLeases(building_id, unit_id, setLeases);
-        setRefreshLeases(r => false);
-    
-    }, [refreshLeases, displayLeaseForm, building_id, unit_id])
+  //get leases
+  useEffect(() => { 
+      fetchLeases(building_id, unit_id, setLeases);
+      setRefreshLeases(r => false);
+  
+  }, [refreshLeases, displayLeaseForm, building_id, unit_id])
     
 
   return (
-    
 
-    <Box sx={{
-      backgroundColor: colors.primary[400],
-      justifyContent: 'space-evenly',
-      m: 3,
-      border: 2
-    }}>
-
-      {displayLeaseForm? <LeaseForm {...{building_id, unit_id, curUser, setRefreshLeases, setDisplayLeaseForm}}/>: ''}
-
-
+    <div>
+      
       {leases === 'none' ? 
-        <HourglassTopIcon/>: 
-        //DATA GRID
-        <Box
-        sx={{
-          m: 3,
-          "& .MuiDataGrid-root": {
-              border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-              borderBottom: "none",
-          },
-          "& .name-column--cell": {
-              color: colors.greenAccent[300],
-          },
-          "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: colors.blueAccent[700],
-              borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-              borderTop: "none",
-              backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-              color: `${colors.greenAccent[200]} !important`,
-          },
-        }}>
+      <HourglassTopIcon/>: 
 
-          <Box justifyContent='space-between' display='flex' mY={2} >
-            <Typography variant="h2" color={colors.grey[100]} fontWeight="bold"> 
-            Leases </Typography>
+      //DATA GRID
+      <Box
+      sx={{
+        m: 2,
+        backgroundColor: colors.primary[400],
+        border: 2,
+        "& .MuiDataGrid-root": {border: "none"},
+        "& .MuiDataGrid-cell": {borderBottom: "none"},
+        "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: colors.blueAccent[700],
+            borderBottom: "none",
+        },
+        "& .MuiDataGrid-virtualScroller": {backgroundColor: colors.primary[400]},
+        "& .MuiDataGrid-footerContainer": {
+          borderTop: "none",
+          backgroundColor: colors.blueAccent[700],
+        },
+        "& .MuiCheckbox-root": {color: `${colors.greenAccent[200]} !important`}
+      }}>
 
-            <IconButton onClick={() =>  onClose()}>
-              <CloseIcon sx={{color: 'red'}}/>
-            </IconButton>
-          </Box>
 
-          <Button 
-            sx={{backgroundColor: 'GrayText', justifyContent: 'flex',
-            alignContent: 'center',}}
-            onClick={() => setDisplayLeaseForm(r => !r)}>
-            Create lease
-          </Button>
-          <DataGrid 
-            rows={ leases } 
-            columns={columns} 
-            getRowId={(row) => row._id}
-            onCellEditStart={(params) => setRowId(params.id)}
-            pageSizeOptions={[]}
-          />
-          
+        <Box justifyContent='space-between' display='flex' m={1} >
+          <Typography variant="h2" color={colors.grey[100]} fontWeight="bold"> 
+          Leases </Typography>
 
-        </Box>}
+          <IconButton onClick={() =>  onClose()}>
+            <CloseIcon sx={{color: 'red'}}/>
+          </IconButton>
+        </Box>
 
-    </Box>
+        <Button 
+          sx={{backgroundColor: 'GrayText',  justifyContent: 'flex',
+          alignContent: 'center', m: 1}}
+          onClick={() => setDisplayLeaseForm(r => !r)}>
+            <AddIcon />
+          Create lease
+        </Button>
+          {displayLeaseForm? <LeaseForm {...{building_id, unit_id, curUser, setRefreshLeases, setDisplayLeaseForm}}/>: ''}
+
+        
+        <DataGrid 
+          rows={ leases } 
+          columns={columns} 
+          getRowId={(row) => row._id}
+          onCellEditStart={(params) => setRowId(params.id)}
+          pageSizeOptions={[]}
+        />
+
+      </Box>}
+    </div>
  
   )
 }

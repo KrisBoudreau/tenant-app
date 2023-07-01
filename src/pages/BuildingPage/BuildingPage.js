@@ -13,6 +13,7 @@ import moment from 'moment';
 import ArticleIcon from '@mui/icons-material/Article';
 import LeasePopUpPage from './LeasePopUpPage';
 import AddIcon from '@mui/icons-material/Add';
+import LeasePage from './LeasePage';
 
 export default function BuildingPage( {curUser} ) {
 
@@ -22,6 +23,8 @@ export default function BuildingPage( {curUser} ) {
 
   const [displayUnitForm, setDisplayUnitForm] = useState(false);
   const [displayLeasePopUpPage, setDisplayLeasePopUpPage] = useState(false);
+  const [displayLease, setDisplayLease] = useState(false);
+  const [curLease, setCurLease] = useState(null);
   const [refreshUnits, setRefreshUnits] = useState(false);
   const [units, setUnits] = useState('none');
   const [building, setBuilding] = useState('none');
@@ -127,23 +130,31 @@ export default function BuildingPage( {curUser} ) {
 
   return (
     <div>
-      <Box m="20px">
+
+    
+      <Box m="20px" >
         
         <Header title={building.name} />
-        
+
+        {displayLease ? 
+        <LeasePage curLease={curLease}/> : null}
+
         {displayLeasePopUpPage ? 
         <LeasePopUpPage 
         onClose={() => setDisplayLeasePopUpPage(false)}
         building_id={id}
         unit_id={curUnitId}
         curUser={curUser}
+        setDisplayLease={setDisplayLease}
+        setCurLease={setCurLease}
         />: null}
+
 
         <Button 
           sx={{backgroundColor:colors.primary[300], mX:2, mb: 1/2}} 
           onClick={() => setDisplayUnitForm(r => !r)}>
             <AddIcon />
-          <Typography>Add Unit</Typography>
+          <Typography>Create Unit</Typography>
         </Button>
         
         
@@ -197,8 +208,9 @@ export default function BuildingPage( {curUser} ) {
           />} 
         </Box>
       </Box>
-
+    
     </div>
+    
 
 
   

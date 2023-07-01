@@ -15,6 +15,7 @@ import TopBar from "./components/navbar/TopBar";
 import SideBar from "./components/navbar/SideBar";
 import Users2 from "./pages/users/Users2";
 import ContactForm from "./pages/contact/ContactForm";
+import { Box } from '@mui/material'
 
 
 function App() {
@@ -30,6 +31,9 @@ function App() {
     if (!isAuthenticated) return <LoginPage />;
     if (user) fetchUser(user.email, setCurUser);
   }, [isLoading, isAuthenticated])
+
+  if (!isAuthenticated) return <LoginPage />;
+  
 
   
   return (
