@@ -8,6 +8,7 @@ import { Button, Typography, Box } from '@mui/material'
 import { useTheme } from '@emotion/react'
 import { tokens } from '../../theme'
 import { color } from '@mui/system'
+import HourglassTopIcon from '@mui/icons-material/HourglassTop'
 
 
 
@@ -24,10 +25,9 @@ export default function Buildings( {curUser} ) {
   useEffect(() => { 
     fetchBuildings(setBuildings);
     setRefreshBuildings(r => false);
-    
   }, [refreshBuildings])
   if (buildings === 'none'){
-    return <h1>loading</h1>
+    return <HourglassTopIcon />
   }
 
 
@@ -40,20 +40,17 @@ export default function Buildings( {curUser} ) {
           backgroundColor: colors.primary[400],
           '&:hover': {
             backgroundColor: colors.primary[300],
-            
           },
           margin: 3
-        
         }}
         onClick={() => {
           setDisplayBuildingForm(r => !r);
-
       }}>
         <Typography color={colors.grey[100]}  >
           Add building
         </Typography>
-      
       </Button>
+      
 
       {displayBuildingForm ? <BuildingForm 
         curUser={curUser}

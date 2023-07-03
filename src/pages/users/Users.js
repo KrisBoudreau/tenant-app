@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { fetchUsers } from '../../actions/Actions';
-
-import { mockDataTeam } from "./mockData";
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
@@ -11,7 +9,7 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import BlockIcon from '@mui/icons-material/Block';
 import Header from "./Header";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
-
+import PersonIcon from '@mui/icons-material/Person';
 import UsersActions from './UserActions';
 
 export default function Users() {
@@ -51,7 +49,7 @@ export default function Users() {
       flex: 1,
       editable: true,
       type: 'singleSelect',
-      valueOptions: ['admin', 'full access', 'view only', 'blocked'],
+      valueOptions: ['admin', 'full access', 'view only', 'blocked', 'client'],
       renderCell: ({ row: { role } }) => {
         return (
           <Box
@@ -61,11 +59,12 @@ export default function Users() {
             display="flex"
             justifyContent="center"
             backgroundColor={
-              role === "admin"
-                ? colors.greenAccent[600]
-                : role === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
+              role === "admin" ?
+                colors.greenAccent[600]: 
+              role === "client" ?
+                colors.blueAccent[600]:
+              role === "blocked" ?
+                colors.redAccent[600] : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
@@ -73,6 +72,7 @@ export default function Users() {
             {role === "full access" && <SecurityOutlinedIcon />}
             {role === "view only" && <LockOpenOutlinedIcon />}
             {role === "blocked" && <BlockIcon />}
+            {role === "client" && <PersonIcon/>}
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
               {role}
             </Typography>
@@ -123,7 +123,7 @@ export default function Users() {
           },
         }}
       >
-        {/* mockDataTeam */}
+        
         {users == 'none' ? 
           <HourglassTopIcon/>: 
           <DataGrid 

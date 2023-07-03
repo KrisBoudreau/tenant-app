@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import moment from 'moment';
 
 const ContactForm = () => {
   const form = useRef();
@@ -18,7 +19,11 @@ const ContactForm = () => {
   };
 
   const sendE = () => {
-    emailjs.send('contact_service', 'contact_form', {user_email: 'kris.boudreau68@gmail.com', message: 'sup'}, 'z_XQkle-XnwZbpwEP')
+    emailjs.send('contact_service', 'contact_form', {
+      user_email: 'kris.boudreau68@gmail.com', 
+      message: 'this is message that will be sent rn',
+      subject: 'this is subject'}, 
+    'z_XQkle-XnwZbpwEP')
     .then((result) => {
       console.log('success');
     }, (error) => {
@@ -26,12 +31,15 @@ const ContactForm = () => {
     });
 
   }
-  sendE();
+
+  
+  
+  //sendE();
 
   return (
     <form ref={form} onSubmit={sendEmail}>
-      <label>Name</label>
-      <input type="text" name="user_name" />
+      <label>Subject</label>
+      <input type="text" name="subject" />
       <label>Email</label>
       <input type="email" name="user_email" />
       <label>Message</label>

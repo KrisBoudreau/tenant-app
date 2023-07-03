@@ -13,9 +13,10 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import TopBar from "./components/navbar/TopBar";
 import SideBar from "./components/navbar/SideBar";
-import Users2 from "./pages/users/Users2";
+
 import ContactForm from "./pages/contact/ContactForm";
 import { Box } from '@mui/material'
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 
 
 function App() {
@@ -32,16 +33,34 @@ function App() {
     if (user) fetchUser(user.email, setCurUser);
   }, [isLoading, isAuthenticated])
 
+  if (isLoading) return <HourglassTopIcon />
+
   if (!isAuthenticated) return <LoginPage />;
-  
+
 
   
   return (
 
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}> 
-        <CssBaseline /> 
+        <CssBaseline />
+        {curUser.role === "blocked" ? 
+          <div>ur blocked</div> : 
+        curUser.role === "client" ?
 
+        <div className="app">
+        <SideBar curUser={curUser}/> 
+        <main className="content">
+          <TopBar />
+          ur a client 
+          <Routes>
+          
+            <Route path="/email" element={<ContactForm />} />
+          </Routes>
+        </main>
+        </div> :  
+
+       
         <div className="app">
             <SideBar curUser={curUser}/> 
             <main className="content">
@@ -52,11 +71,13 @@ function App() {
                 <Route path="/buildings/:id" element={<BuildingPage curUser={curUser} />} />
                 {/* <Route path="/leases/:id" element={<LeasePage />} /> */}
                 <Route path="/users" element={<Users />} />
-                <Route path="/users2" element={<Users2 />} />
+
                 <Route path="/email" element={<ContactForm />} />
               </Routes>
             </main>
         </div>
+        }
+       
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

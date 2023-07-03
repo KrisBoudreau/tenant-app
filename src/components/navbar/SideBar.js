@@ -34,7 +34,8 @@ const SideBar = ( {curUser} ) => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  
+
+
   
 
   return (
@@ -60,93 +61,94 @@ const SideBar = ( {curUser} ) => {
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
 
-            {/* LOGO AND MENU ICON */}
-            <MenuItem
-                onClick={() => setIsCollapsed(!isCollapsed)}
-                icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-                style={{
-                margin: "10px 0 20px 0",
-                color: colors.grey[100],
-                }}
-            >
-                {!isCollapsed && (
-                <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    ml="15px"
-                >
-                    <Typography variant="h3" color={colors.grey[100]}>
-                    PGK
-                    </Typography>
-                    <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                    <MenuOutlinedIcon />
-                    </IconButton>
-                </Box>
-                )}
-            </MenuItem>
+          {/* LOGO AND MENU ICON */}
+          <MenuItem
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
+              style={{
+              margin: "10px 0 20px 0",
+              color: colors.grey[100],
+              }}
+          >
+              {!isCollapsed && (
+              <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  ml="15px"
+              >
+                  <Typography variant="h3" color={colors.grey[100]}>
+                  PGK
+                  </Typography>
+                  <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                  <MenuOutlinedIcon />
+                  </IconButton>
+              </Box>
+              )}
+          </MenuItem>
 
 
-            {/* Profile info */}   
-            {!isCollapsed && (
-                <Box mb="25px">
-                <Box textAlign="center">
-                    <Typography
-                    variant="h2"
-                    color={colors.grey[100]}
-                    fontWeight="bold"
-                    sx={{ m: "10px 0 0 0" }}
-                    >
-                      
-                    {curUser == 'none' ? <HourglassTopIcon />: curUser.name}
-                    </Typography>
-                    <Typography variant="h5" color={colors.greenAccent[500]}>
-                    {curUser == 'none' ? <HourglassTopIcon />: curUser.role}
-                    </Typography>
-                </Box>
-                </Box>
-            )}
-
-
-                
-            {/* Menu */}  
-                
-            <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-
-                <Typography
-                variant="h6"
-                color={colors.grey[300]}
-                sx={{ m: "15px 0 5px 20px" }}
-                >
-                    Menu
-                </Typography>
-
-                <Item
-                title="Home"
-                to="/"
-                icon={<HomeOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-                />
-
-                
-                <Item
-                title="Buildings"
-                to="/buildings"
-                icon={<ApartmentIcon/>}
-                selected={selected}
-                setSelected={setSelected}
-                />
-
-                <Item
-                title="Users"
-                to="/users"
-                icon={<PeopleOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-                />
-                
+          {/* Profile info */}   
+          {!isCollapsed && (
+            <Box mb="25px">
+              <Box textAlign="center">
+                  <Typography
+                  variant="h2"
+                  color={colors.grey[100]}
+                  fontWeight="bold"
+                  sx={{ m: "10px 0 0 0" }}
+                  >
+                    
+                  {curUser == 'none' ? <HourglassTopIcon />: curUser.name}
+                  </Typography>
+                  <Typography variant="h5" color={colors.greenAccent[500]}>
+                  {curUser == 'none' ? <HourglassTopIcon />: curUser.role}
+                  </Typography>
+              </Box>
             </Box>
+          )}
+
+
+              
+          {/* Menu */}  
+              
+          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+
+            <Typography
+            variant="h6"
+            color={colors.grey[300]}
+            sx={{ m: "15px 0 5px 20px" }}
+            >
+                Menu
+            </Typography>
+
+
+            <Item
+            title="Home"
+            to="/"
+            icon={<HomeOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
+            />
+
+            
+            <Item
+            title="Buildings"
+            to="/buildings"
+            icon={<ApartmentIcon/>}
+            selected={selected}
+            setSelected={setSelected}
+            />
+
+            <Item
+            title="Users"
+            to="/users"
+            icon={<PeopleOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
+            />
+              
+          </Box>
 
         </Menu>
       </ProSidebar>
