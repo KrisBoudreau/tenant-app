@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Typography, Box, useTheme } from '@mui/material'
-import { tokens } from '../../theme'
-import { fetchLeases } from '../../actions/Actions';
+import { tokens } from '../../../theme'
+import { fetchLeases } from '../../../actions/Actions';
 import { useEffect, useState } from 'react';
 import LeaseForm from './LeaseForm';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';

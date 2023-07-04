@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
-import LoginPage from "./components/login/LoginPage";
-
-import Home from "./pages/home/Home";
-import Buildings from "./pages/buildings/Buildings";
-import Users from "./pages/users/Users";
-import { fetchUser } from "./actions/Actions";
-import BuildingPage from "./pages/BuildingPage/BuildingPage";
-
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { ColorModeContext, useMode } from "./theme";
 import TopBar from "./components/navbar/TopBar";
 import SideBar from "./components/navbar/SideBar";
-
-import ContactForm from "./pages/contact/ContactForm";
-import { Box } from '@mui/material'
+import LoginPage from "./components/login/LoginPage";
+import Home from "./pages/admin/home/Home";
+import Buildings from "./pages/admin/buildings/Buildings";
+import Users from "./pages/admin/users/Users";
+import BuildingPage from "./pages/admin/BuildingPage/BuildingPage";
+import ContactForm from "./pages/admin/contact/ContactForm";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+import Profile from './components/Profile'
+import Client from './pages/client/Client'
+import { fetchUser } from "./actions/Actions";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ColorModeContext, useMode } from "./theme";
 
 
 function App() {
@@ -44,23 +42,20 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}> 
         <CssBaseline />
+
         {curUser.role === "blocked" ? 
           <div>ur blocked</div> : 
         curUser.role === "client" ?
 
-        <div className="app">
-        <SideBar curUser={curUser}/> 
-        <main className="content">
-          <TopBar />
-          ur a client 
-          <Routes>
-          
-            <Route path="/email" element={<ContactForm />} />
-          </Routes>
-        </main>
-        </div> :  
+          <div className="app">
+          <SideBar curUser={curUser}/> 
+          <main className="content">
+            <TopBar />
+            <Client { ...{curUser} }/>
+            
+          </main>
+          </div> :  
 
-       
         <div className="app">
             <SideBar curUser={curUser}/> 
             <main className="content">
@@ -69,9 +64,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/buildings" element={<Buildings curUser={curUser} />} />
                 <Route path="/buildings/:id" element={<BuildingPage curUser={curUser} />} />
-                {/* <Route path="/leases/:id" element={<LeasePage />} /> */}
                 <Route path="/users" element={<Users />} />
-
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/email" element={<ContactForm />} />
               </Routes>
             </main>

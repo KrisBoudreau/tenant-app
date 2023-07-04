@@ -34,6 +34,16 @@ export const updateLease = async ( p ) => {
   })
 }
 
+export const fetchLease = (id, setLease) => {
+  axios.get(`http://localhost:3001/buildings/lease/${id}`)
+    .then(req => setLease(r => req.data[0])) 
+}
+
+export const fetchLeasesByEmail = (email_id, setLeases) => {
+  axios.get(`http://localhost:3001/leases/email/${email_id}`)
+    .then(req => setLeases(req.data))
+}
+
 
 
 export const fetchUser = (curUserEmail, setCurUser) =>  {
@@ -105,7 +115,4 @@ export const removeLease = (unit_id, building_id, lease_id) => {
   axios.delete(`http://localhost:3001/buildings/${building_id}/units/${unit_id}/leases/${lease_id}`)
 }
 
-export const fetchLease = (id, setLease) => {
-  axios.get(`http://localhost:3001/buildings/lease/${id}`)
-    .then(req => setLease(r => req.data[0])) 
-}
+

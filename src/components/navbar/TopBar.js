@@ -11,6 +11,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuth0 } from "@auth0/auth0-react";
 
+import { Link, redirect } from 'react-router-dom';
+
 const TopBar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -46,9 +48,13 @@ const TopBar = () => {
         <IconButton>
           <SettingsOutlinedIcon />
         </IconButton>
+
+        <Link to={`/profile`} style={{ textDecoration: 'none'}}>
         <IconButton>
-          <PersonOutlinedIcon />
-        </IconButton>
+            <PersonOutlinedIcon />
+          </IconButton>
+          </Link>
+        
         <IconButton onClick={() => logout({ logoutParams: { returnTo: window.location.origin }})}>
           <LogoutIcon />
         </IconButton>

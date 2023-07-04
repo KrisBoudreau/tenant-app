@@ -1,31 +1,25 @@
 import { Box, CircularProgress, Fab } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Check, Save } from '@mui/icons-material';
-import { green, grey } from '@mui/material/colors';
-import { updateLease } from '../../actions/Actions';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useTheme } from '@mui/material';
-import { tokens } from "../../theme";
-import axios from 'axios'
+import { green } from '@mui/material/colors';
+import { updateUser } from '../../../actions/Actions';
 
-const LeaseActions = ({ params, rowId, setRowId, building_id, unit_id, setRefreshLeases }) => {
+const UserActions = ({ params, rowId, setRowId }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
 
-  const handleSubmit = async () => {  
+  const handleSubmit = async () => {
     setLoading(true);
 
-    
-    const result = await updateLease( params.row );
-    
+    const { name, email, role, _id } = params.row;
+
+    const result = await updateUser( {name, email, role, _id} );
   
-    setTimeout(() => {
+    if (true) {
       setSuccess(true);
       setRowId(null);
-      setLoading(false);
-    },1000)
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -39,7 +33,6 @@ const LeaseActions = ({ params, rowId, setRowId, building_id, unit_id, setRefres
         position: 'relative',
       }}
     >
-      
       {success ? (
         <Fab
           color="primary"
@@ -77,20 +70,8 @@ const LeaseActions = ({ params, rowId, setRowId, building_id, unit_id, setRefres
           }}
         />
       )}
-
-      <DeleteIcon 
-        sx={{
-          position: 'absolute', 
-          top: '50%', 
-          transform: 'translateY(-50%)',
-          '&:hover': { color: 'red' }}}
-        onClick={() => {
-          axios.delete(`http://localhost:3001/buildings/${building_id}/units/${unit_id}/leases/${params.id}`);
-          setRefreshLeases(r => true)   
-        }} 
-      />
     </Box>
   );
 };
 
-export default LeaseActions;
+export default UserActions;

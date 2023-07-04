@@ -2,10 +2,10 @@ import { Box, CircularProgress, Fab } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Check, Save } from '@mui/icons-material';
 import { green, grey } from '@mui/material/colors';
-import { updateUnit } from '../../actions/Actions';
+import { updateUnit } from '../../../actions/Actions';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTheme } from '@mui/material';
-import { tokens } from "../../theme";
+import { tokens } from "../../../theme";
 import axios from 'axios'
 
 const UnitActions = ({ params, rowId, setRowId, buildingId, setRefreshUnits }) => {

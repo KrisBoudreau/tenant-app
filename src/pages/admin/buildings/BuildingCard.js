@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, Typography, Button, useTheme, Box } from '@mui/material'
 import { Link, redirect } from 'react-router-dom';
-import { removeBuilding } from '../../actions/Actions'
-import { tokens } from '../../theme';
+import { removeBuilding } from '../../../actions/Actions'
+import { tokens } from '../../../theme';
 import EmailIcon from '@mui/icons-material/Email';
 import Fab from '@mui/material/Fab';
 import { green, red, blue } from '@mui/material/colors';

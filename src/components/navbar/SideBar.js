@@ -11,6 +11,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import { maxHeight } from "@mui/system";
 
+
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -122,31 +123,40 @@ const SideBar = ( {curUser} ) => {
                 Menu
             </Typography>
 
-
-            <Item
-            title="Home"
-            to="/"
-            icon={<HomeOutlinedIcon />}
-            selected={selected}
-            setSelected={setSelected}
-            />
-
-            
-            <Item
-            title="Buildings"
-            to="/buildings"
-            icon={<ApartmentIcon/>}
-            selected={selected}
-            setSelected={setSelected}
-            />
-
-            <Item
-            title="Users"
-            to="/users"
-            icon={<PeopleOutlinedIcon />}
-            selected={selected}
-            setSelected={setSelected}
-            />
+            {curUser.role === "client" ?
+            <div>
+              <Item 
+              title="Home"
+              to="/"
+              icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              />
+            </div> : 
+            <div>
+              <Item 
+              title="Home"
+              to="/"
+              icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              />
+              <Item
+              title="Buildings"
+              to="/buildings"
+              icon={<ApartmentIcon/>}
+              selected={selected}
+              setSelected={setSelected}
+              />
+              <Item
+              title="Users"
+              to="/users"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              />
+            </div>
+            }
               
           </Box>
 

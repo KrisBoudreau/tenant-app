@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { Box } from '@mui/material';
 import { useTheme } from '@emotion/react'
-import { tokens } from '../../theme'
+import { tokens } from '../../../theme'
 
 export default function BuildingForm( {
     curUser, 

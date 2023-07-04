@@ -1,25 +1,31 @@
 import { Box, CircularProgress, Fab } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Check, Save } from '@mui/icons-material';
-import { green } from '@mui/material/colors';
-import { updateUser } from '../../actions/Actions';
+import { green, grey } from '@mui/material/colors';
+import { updateLease } from '../../../actions/Actions';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useTheme } from '@mui/material';
+import { tokens } from "../../../theme";
+import axios from 'axios'
 
-const UserActions = ({ params, rowId, setRowId }) => {
+const LeaseActions = ({ params, rowId, setRowId, building_id, unit_id, setRefreshLeases }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async () => {  
     setLoading(true);
 
-    const { name, email, role, _id } = params.row;
-
-    const result = await updateUser( {name, email, role, _id} );
+    
+    const result = await updateLease( params.row );
+    
   
-    if (true) {
+    setTimeout(() => {
       setSuccess(true);
       setRowId(null);
-    }
-    setLoading(false);
+      setLoading(false);
+    },1000)
   };
 
   useEffect(() => {
@@ -33,6 +39,7 @@ const UserActions = ({ params, rowId, setRowId }) => {
         position: 'relative',
       }}
     >
+      
       {success ? (
         <Fab
           color="primary"
@@ -70,8 +77,20 @@ const UserActions = ({ params, rowId, setRowId }) => {
           }}
         />
       )}
+
+      <DeleteIcon 
+        sx={{
+          position: 'absolute', 
+          top: '50%', 
+          transform: 'translateY(-50%)',
+          '&:hover': { color: 'red' }}}
+        onClick={() => {
+          axios.delete(`http://localhost:3001/buildings/${building_id}/units/${unit_id}/leases/${params.id}`);
+          setRefreshLeases(r => true)   
+        }} 
+      />
     </Box>
   );
 };
 
-export default UserActions;
+export default LeaseActions;
