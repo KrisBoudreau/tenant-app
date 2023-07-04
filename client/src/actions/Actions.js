@@ -1,14 +1,17 @@
 
 import axios from 'axios';
 
+const url = 'https://tenant-app-zinx.onrender.com'
+
+
 
 
 export const updateUser = async ( {name, email, role, _id} ) => {
-  axios.post(`http://localhost:3001/users/update/${_id}`, {
+  axios.post(`${url}/users/update/${_id}`, {
     name: name, email: email, role: role});
 }
 export const updateUnit = async ( p ) => {
-  axios.post(`http://localhost:3001/buildings/${p.building_id}/units/${p._id}`,{
+  axios.post(`${url}/buildings/${p.building_id}/units/${p._id}`,{
     unit_number: p.unit_number, 
     tenant_name: p.tenant_name,
     price_per_sqft: p.price_per_sqft,
@@ -24,7 +27,7 @@ export const updateUnit = async ( p ) => {
 
 export const updateLease = async ( p ) => {
   axios.post(
-    `http://localhost:3001/buildings/${p.building_id}/units/${p.unit_id}/leases/${p._id}`,{
+    `${url}/buildings/${p.building_id}/units/${p.unit_id}/leases/${p._id}`,{
     tenant_name: p.tenant_name,
     tenant_phone: p.tenant_phone,
     tenant_email: p.tenant_email,
@@ -35,24 +38,24 @@ export const updateLease = async ( p ) => {
 }
 
 export const fetchLease = (id, setLease) => {
-  axios.get(`http://localhost:3001/buildings/lease/${id}`)
+  axios.get(`${url}/buildings/lease/${id}`)
     .then(req => setLease(r => req.data[0])) 
 }
 
 export const fetchLeasesByEmail = (email_id, setLeases) => {
-  axios.get(`http://localhost:3001/leases/email/${email_id}`)
+  axios.get(`${url}/leases/email/${email_id}`)
     .then(req => setLeases(req.data))
 }
 
 
 
 export const fetchUser = (curUserEmail, setCurUser) =>  {
-    axios.get(`http://localhost:3001/users/email/${curUserEmail}`)
+    axios.get(`${url}/users/email/${curUserEmail}`)
     .then(res => {
       if (res.data.length == 0){
         axios({
           method: 'post',
-          url: 'http://localhost:3001/users',
+          url: '${url}/users',
           data: {
             name: 'no name',
             email: curUserEmail,
@@ -77,42 +80,42 @@ export const fetchUser = (curUserEmail, setCurUser) =>  {
 
 
 export const fetchBuildings = (setBuildings) => {
-  axios.get('http://localhost:3001/buildings')
+  axios.get(`${url}/buildings`)
     .then(req => setBuildings(r => req.data)) 
 }
 export const fetchBuilding = (id, setBuilding) => {
-  axios.get(`http://localhost:3001/buildings/${id}`)
+  axios.get(`${url}/buildings/${id}`)
     .then(req => setBuilding(r => req.data[0])) 
 }
 
 export const fetchUsers = (setUsers) => {
-  axios.get('http://localhost:3001/users')
+  axios.get(`${url}/users`)
     .then(req => setUsers(r => req.data)) 
 }
 
 export const fetchUnits = (building_id, setUnits) => {
-  axios.get(`http://localhost:3001/buildings/${building_id}/units`)
+  axios.get(`${url}/buildings/${building_id}/units`)
     .then(req => setUnits(r => req.data)) 
 }
 
 export const removeUnit = (unit_id, building_id) => {
-  axios.delete(`http://localhost:3001/buildings/${building_id}/units/${unit_id}`)
+  axios.delete(`${url}/buildings/${building_id}/units/${unit_id}`)
   
 }
 
 export const removeBuilding = (building_id) => {
-  axios.delete(`http://localhost:3001/buildings/${building_id}`)
+  axios.delete(`${url}/buildings/${building_id}`)
   
 }
 
 
 export const fetchLeases = (building_id, unit_id, setLeases) => {
-  axios.get(`http://localhost:3001/buildings/${building_id}/units/${unit_id}/leases`)
+  axios.get(`${url}/buildings/${building_id}/units/${unit_id}/leases`)
     .then(req => setLeases(r => req.data)) 
 }
 
 export const removeLease = (unit_id, building_id, lease_id) => {
-  axios.delete(`http://localhost:3001/buildings/${building_id}/units/${unit_id}/leases/${lease_id}`)
+  axios.delete(`${url}/buildings/${building_id}/units/${unit_id}/leases/${lease_id}`)
 }
 
 
