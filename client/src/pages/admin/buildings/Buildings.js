@@ -41,7 +41,7 @@ export default function Buildings( {curUser} ) {
           '&:hover': {
             backgroundColor: colors.primary[300],
           },
-          margin: 3
+          margin: 4
         }}
         onClick={() => {
           setDisplayBuildingForm(r => !r);

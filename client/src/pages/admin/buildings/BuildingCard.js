@@ -34,34 +34,37 @@ export default function BuildingCard( {curUser, name, id, setRefreshBuildings } 
             
         }}>
             
-            <Typography align="center" variant="h4"  
+            <Typography sx={{m:2}} variant="h2"  
             >{ name }</Typography>
 
-            <Box >
+            <Box sx={{m: 2}}>
         
             <Link to={`/buildings/${id}`} style={{ textDecoration: 'none'}}>
             <Fab
                 color="primary"
                 sx={{
-                width: 40,
-                height: 40,
-                bgcolor: colors.primary[400],
-                '&:hover': { bgcolor: blue[600] },
+                    marginRight:1,
+                    width: 40,
+                    height: 40,
+                    bgcolor: colors.primary[400],
+                    '&:hover': { bgcolor: blue[600] },
             }}>
                 <VisibilityIcon />
             </Fab>
             </Link>
-
+            <Link to={`/mail/${id}`} style={{ textDecoration: 'none'}}>
             <Fab
                 color="primary"
                 sx={{
-                width: 40,
-                height: 40,
-                bgcolor: colors.primary[400],
-                '&:hover': { bgcolor: green[700] },
+                    marginRight:1,
+                    width: 40,
+                    height: 40,
+                    bgcolor: colors.primary[400],
+                    '&:hover': { bgcolor: green[700] },
             }}>
                 <EmailIcon />
             </Fab>
+            </Link>
 
             <Fab
                 color="primary"
