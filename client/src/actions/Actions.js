@@ -87,6 +87,9 @@ export const fetchBuilding = (id, setBuilding) => {
   axios.get(`${url}/buildings/${id}`)
     .then(req => setBuilding(r => req.data[0])) 
 }
+export const checkout = () => {
+  axios.post(`http://localhost:3001/create-checkout-session`) 
+}
 
 export const fetchUsers = (setUsers) => {
   axios.get(`${url}/users`)
