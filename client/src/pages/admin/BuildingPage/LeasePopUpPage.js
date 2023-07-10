@@ -145,7 +145,9 @@ export default function LeasePopUpPage( {onClose, building_id, unit_id, curUser,
             <AddIcon />
           Create lease
         </Button>
-          {displayLeaseForm? <LeaseForm {...{building_id, unit_id, curUser, setRefreshLeases, setDisplayLeaseForm}}/>: ''}
+          {displayLeaseForm? <LeaseForm 
+          {...{building_id, unit_id, curUser, setRefreshLeases, setDisplayLeaseForm}}/>
+          : ''}
 
         
         <DataGrid 

@@ -66,7 +66,7 @@ function App() {
                 <Route path="/buildings/:id" element={<BuildingPage curUser={curUser} />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/email" element={<ContactForm />} />
+                <Route path="/mail/:id" element={<ContactForm />} />
               </Routes>
             </main>
         </div>

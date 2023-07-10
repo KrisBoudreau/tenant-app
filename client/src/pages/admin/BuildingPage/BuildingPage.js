@@ -15,6 +15,7 @@ import LeasePopUpPage from './LeasePopUpPage';
 import AddIcon from '@mui/icons-material/Add';
 import LeasePage from './LeasePage';
 
+
 export default function BuildingPage( {curUser} ) {
 
   let { id } = useParams();
@@ -30,6 +31,7 @@ export default function BuildingPage( {curUser} ) {
   const [building, setBuilding] = useState('none');
   const [rowId, setRowId] = useState(null);
   const [curUnitId, setCurUnitId] = useState(null);
+
   
 
   const theme = useTheme();
@@ -137,17 +139,21 @@ export default function BuildingPage( {curUser} ) {
         <Header title={building.name} />
 
         {displayLease ? 
-        <LeasePage curLease={curLease}/> : null}
+        <LeasePage { ...{setDisplayLease, curLease}}/> : null}
+        
+
 
         {displayLeasePopUpPage ? 
         <LeasePopUpPage 
-        onClose={() => setDisplayLeasePopUpPage(false)}
+        onClose={() => {setDisplayLeasePopUpPage(false); setDisplayLease(false)}}
         building_id={id}
         unit_id={curUnitId}
         curUser={curUser}
-        setDisplayLease={setDisplayLease}
         setCurLease={setCurLease}
+        setDisplayLease={setDisplayLease}
         />: null}
+
+            
 
 
         <Button 
