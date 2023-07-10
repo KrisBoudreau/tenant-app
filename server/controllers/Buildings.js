@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import Building from '../models/Building.js';
 import Unit from '../models/Unit.js';
 import Lease from '../models/Lease.js';
+import Email from '../models/Email.js'
 
 const router = express.Router();
 
@@ -64,6 +65,42 @@ export const getLease = async (req, res) => {
         res.status(200).json(theLease);
     } catch (error) {
         res.status(404).json({ message: error.message });
+    }
+}
+export const getEmails = async (req, res) => { 
+    try {
+        const Emails = await Email.find();    
+        res.status(200).json(Emails);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+export const getEmail = async (req, res) => { 
+    try {
+        const theEmail = await Email.find({_id: req.params.mail_id});    
+        res.status(200).json(theEmail);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+export const createEmail = async (req, res) => { 
+    const { title, subject, body } = req.body;
+    const building_id = req.params.building_id;   
+    const newEmail = new Email({ title, subject, body, building_id });
+    try {
+        await newEmail.save();
+        res.status(201).json('success');
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+export const deleteEmail = async (req, res) => { 
+    try {
+        await Email.deleteOne( {_id: req.params.mail_id} );    
+        res.status(200).json('success');
+    } catch (error) {
+        res.status(404).json({ message: error.message });   
     }
 }
 

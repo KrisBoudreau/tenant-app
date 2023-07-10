@@ -34,22 +34,7 @@ app.use('/leases', leaseRoutes);
 
 app.get('/', (req, res) => res.send('get'));
 
-// app.post('/create-checkout-session', async (req, res) => {
-//   const session = await stripe.checkout.sessions.create({
-//     line_items: [
-//       {
-//         // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-//         price: 'price_1NQEjVHH0CZoQYbBX5xcu0mf',
-//         quantity: 1,
-//       },
-//     ],
-//     mode: 'payment',
-//     success_url: `${YOUR_DOMAIN}?success=true`,
-//     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
-//   });
 
-//   res.redirect(303, session.url);
-// });
 
 
 const CONNECTION_URL = 'mongodb+srv://user:userPass123@cluster0.nb6xkrq.mongodb.net/?retryWrites=true&w=majority';
