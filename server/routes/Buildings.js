@@ -14,7 +14,11 @@ import {
     createLease,
     deleteLease,
     updateUnit,
-    updateLease } 
+    updateLease,
+    getEmails,
+    createEmail,
+    getEmail,
+    deleteEmail } 
     from '../controllers/Buildings.js';
 
 
@@ -27,6 +31,11 @@ router.get('/:building_id/units', getUnits);
 router.get('/:building_id/units/:unit_id', getUnit);
 router.get('/:building_id/units/:unit_id/leases', getLeases);
 router.get('/:building_id/units/:unit_id/leases/:lease_id', getLease);
+
+router.get('/:building_id/mail', getEmails)
+router.get('/:building_id/mail/:mail_id', getEmail)
+router.post('/:building_id/mail', createEmail)
+router.delete('/:building_id/mail/:mail_id', deleteEmail)
 
 
 

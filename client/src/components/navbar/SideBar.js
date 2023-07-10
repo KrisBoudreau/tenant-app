@@ -9,7 +9,6 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
-import { maxHeight } from "@mui/system";
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {

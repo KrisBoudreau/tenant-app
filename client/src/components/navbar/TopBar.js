@@ -11,7 +11,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { Link, redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const TopBar = () => {
   const theme = useTheme();
@@ -21,6 +21,7 @@ const TopBar = () => {
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
+      
       {/* SEARCH BAR */}
       <Box
         display="flex"
@@ -35,12 +36,14 @@ const TopBar = () => {
 
       {/* ICONS */}
       <Box display="flex">
+        
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />
           ) : (
             <LightModeOutlinedIcon />
           )}
+
         </IconButton>
         <IconButton>
           <NotificationsOutlinedIcon />
@@ -59,6 +62,7 @@ const TopBar = () => {
           <LogoutIcon />
         </IconButton>
       </Box>
+
     </Box>
   );
 };
