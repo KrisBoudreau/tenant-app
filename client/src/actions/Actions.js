@@ -3,6 +3,8 @@ import axios from 'axios';
 
 const url = 'https://tenant-app-zinx.onrender.com'
 
+const local_server = 'http://localhost:3001'
+
 
 
 
@@ -78,6 +80,15 @@ export const fetchUser = (curUserEmail, setCurUser) =>  {
     });
 }
 
+export const fetchEmails = (id, setEmails) => {
+  axios.get(`${local_server}/buildings/${id}/mail`)
+    .then(req => setEmails(r => req.data)) 
+}
+
+export const removeEmail = (building_id, email_id) => {
+  axios.delete(`${local_server}/buildings/${building_id}/mail/${email_id}`)
+}
+
 
 export const fetchBuildings = (setBuildings) => {
   axios.get(`${url}/buildings`)
@@ -97,6 +108,10 @@ export const fetchUsers = (setUsers) => {
 export const fetchUnits = (building_id, setUnits) => {
   axios.get(`${url}/buildings/${building_id}/units`)
     .then(req => setUnits(r => req.data)) 
+}
+export const fetchAllUnits = (setUnits) => {
+  axios.get(`${local_server}/units`)
+    .then(req => setUnits(r => req.data))
 }
 
 export const removeUnit = (unit_id, building_id) => {

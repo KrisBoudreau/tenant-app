@@ -5,15 +5,8 @@ import cors from 'cors';
 import buildingsRoutes from './routes/Buildings.js';
 import userRoutes from './routes/Users.js';
 import leaseRoutes from './routes/Leases.js'
+import Unit from './models/Unit.js';
 
-// import Stripe from 'stripe';
-
-// const stripe = new Stripe('pk_live_51NPxo3HH0CZoQYbB3sTE5HUx2kiToUQ0Jq7MP1zEZBzh0APQvZbkTZaxqquTJgj7M6WPXiknPzVOnqk6HuNqrpcM00JbBiHO4o'
-// , {
-//   apiVersion: '2020-08-27',
-// });
-
-// const YOUR_DOMAIN = 'http://localhost:3000';
 
 const app = express();
 
@@ -23,17 +16,22 @@ app.use(cors());
 
 
 
-
 app.use('/buildings', buildingsRoutes);
 app.use('/users', userRoutes);
 app.use('/leases', leaseRoutes);
+app.get('/units', async (req, res) => {
+  try {
+    const Units = await Unit.find();    
+    res.status(200).json(Units);
+} catch (error) {
+    res.status(404).json({ message: error.message });
+}
 
-
+})
 
 
 
 app.get('/', (req, res) => res.send('get'));
-
 
 
 

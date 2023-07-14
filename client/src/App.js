@@ -15,6 +15,7 @@ import Client from './pages/client/Client'
 import { fetchUser } from "./actions/Actions";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
+import EmailPage from './pages/admin/contact/EmailPage'
 
 //here
 function App() {
@@ -57,7 +58,9 @@ function App() {
           </div> :  
 
         <div className="app">
-            <SideBar curUser={curUser}/> 
+            <div className="side">
+            <SideBar curUser={curUser} /> 
+            </div>
             <main className="content">
               <TopBar />
               <Routes>
@@ -66,6 +69,7 @@ function App() {
                 <Route path="/buildings/:id" element={<BuildingPage curUser={curUser} />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/mail/" element={<EmailPage />} />
                 <Route path="/mail/:id" element={<ContactForm />} />
               </Routes>
             </main>

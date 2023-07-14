@@ -20,16 +20,15 @@ export default function BuildingForm( {
             backgroundColor: colors.primary[400]
         }}>
             Building Form
-            <form onSubmit={handleSubmit(
-                (data)=> {
-                    axios.post(`http://localhost:3001/buildings`,{
-                        name: data.name,
-                        creator: curUser.name,
-                        insurance_email: 'none'
-                        }
-                    );
-                    setRefreshBuildings(r => true);
-                    setDisplayBuildingForm(r => !r);
+            <form onSubmit={handleSubmit((data)=> {
+                axios.post(`http://localhost:3001/buildings`,{
+                    name: data.name,
+                    creator: curUser.name,
+                    insurance_email: 'none'
+                    }
+                );
+                setRefreshBuildings(r => true);
+                setDisplayBuildingForm(r => !r);
                 }
             )}>
 

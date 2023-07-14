@@ -5,8 +5,7 @@ import { tokens } from "../../../theme";
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form'
-import { checkout } from '../../../actions/Actions'
-import Buy from './Buy'
+
 
 
 export default function LeasePage( {curLease, setDisplayLease} ) {
@@ -43,12 +42,6 @@ export default function LeasePage( {curLease, setDisplayLease} ) {
       </Button>
 
 
-      {/* <section>
-        
-        <Button sx={{backgroundColor: 'red'}} onClick={() => checkout()}>checkout</Button>
-      </section> */}
-
-
       {displayPayForm &&
       <form onSubmit={handleSubmit(
         (data)=> {
@@ -63,22 +56,15 @@ export default function LeasePage( {curLease, setDisplayLease} ) {
           setRefreshPayments(r => !r);
         }
       )}>
-
         <label>
-            Amount in cents
-            <input type='number' {...register("amount")}/>
+          Amount in cents
+          <input type='number' {...register("amount")}/>
         </label>
 
         <input type="submit" value="submit"/>
       </form>
       }
 
-      
-
-      
-        
-
     </Box>
-  )
-  
+  ) 
 }
