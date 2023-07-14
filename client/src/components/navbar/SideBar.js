@@ -9,6 +9,7 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+import MailIcon from '@mui/icons-material/Mail';
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -41,6 +42,8 @@ const SideBar = ( {curUser} ) => {
   return (
     <Box
       sx={{
+        
+        height: '100%',
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
         },
@@ -144,6 +147,13 @@ const SideBar = ( {curUser} ) => {
               title="Buildings"
               to="/buildings"
               icon={<ApartmentIcon/>}
+              selected={selected}
+              setSelected={setSelected}
+              />
+              <Item
+              title="Emails"
+              to="/mail"
+              icon={<MailIcon />}
               selected={selected}
               setSelected={setSelected}
               />

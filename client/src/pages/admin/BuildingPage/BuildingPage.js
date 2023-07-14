@@ -39,9 +39,9 @@ export default function BuildingPage( {curUser} ) {
 
   //fetch units
   useEffect(() => {
-      fetchUnits(id, setUnits);
-      fetchBuilding(id, setBuilding);
-      setRefreshUnits(r => false);
+    fetchUnits(id, setUnits);
+    fetchBuilding(id, setBuilding);
+    setRefreshUnits(r => false);
   }, [refreshUnits, id])
 
 
@@ -142,7 +142,7 @@ export default function BuildingPage( {curUser} ) {
         <LeasePage { ...{setDisplayLease, curLease}}/> : null}
         
 
-
+        <Box sx={{maxWidth: '1100px'}}>
         {displayLeasePopUpPage ? 
         <LeasePopUpPage 
         onClose={() => {setDisplayLeasePopUpPage(false); setDisplayLease(false)}}
@@ -152,6 +152,7 @@ export default function BuildingPage( {curUser} ) {
         setCurLease={setCurLease}
         setDisplayLease={setDisplayLease}
         />: null}
+        </Box> 
 
             
 
@@ -206,11 +207,11 @@ export default function BuildingPage( {curUser} ) {
           {units === 'none'? 
           <HourglassTopIcon/>: 
           <DataGrid 
-              rows={ units } 
-              columns={columns} 
-              getRowId={(row) => row._id}
-              onCellEditStart={(params) => setRowId(params.id)
-              }
+            rows={ units } 
+            columns={columns} 
+            getRowId={(row) => row._id}
+            onCellEditStart={(params) => setRowId(params.id)
+            }
           />} 
         </Box>
       </Box>

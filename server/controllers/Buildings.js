@@ -69,7 +69,7 @@ export const getLease = async (req, res) => {
 }
 export const getEmails = async (req, res) => { 
     try {
-        const Emails = await Email.find();    
+        const Emails = await Email.find({building_id: req.params.building_id});    
         res.status(200).json(Emails);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -84,9 +84,9 @@ export const getEmail = async (req, res) => {
     }
 }
 export const createEmail = async (req, res) => { 
-    const { title, subject, body } = req.body;
+    const { title, subject, body, send_instructions } = req.body;
     const building_id = req.params.building_id;   
-    const newEmail = new Email({ title, subject, body, building_id });
+    const newEmail = new Email({ title, subject, body, building_id, send_instructions });
     try {
         await newEmail.save();
         res.status(201).json('success');
@@ -149,8 +149,19 @@ export const createUnit = async (req, res) => {
         base_rate,
         end_of_insurance,
         end_of_lease });
+    
     try {
         await newUnit.save();
+        Unit.findOne({unit_number: unit_number})
+        .then(u => {
+            const unit_id = u._id;
+            const blankLease = new Lease({ 
+                unit_id,
+                building_id,
+            });
+            blankLease.save();
+        })
+
         res.status(201);
     } catch (error) {
         res.status(409).json({ message: error.message });
